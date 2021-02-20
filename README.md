@@ -7,11 +7,11 @@ singularity build transformers-ner.sif transformers-ner.def
 
 ### Run Slurm Job
 ```
-srun --gres=gpu:t2080ti:1 singularity exec transformers-ner.sif python3 run_ner.py \
+srun --gres=gpu:t2080ti:1 singularity exec transformers-ner.sif python3 run_ner_transformers.py \
   --model_name_or_path bert-base-german-cased \
-  --train_file Legal-Entity-Recognition/data/train.json \
-  --validation_file Legal-Entity-Recognition/data/validation.json \
-  --test_file Legal-Entity-Recognition/data/test.json \
+  --train_file data/train.json \
+  --validation_file data/validation.json \
+  --test_file data/test.json \
   --output_dir ler-tmp2 \
   --do_train \
   --do_eval \
@@ -19,11 +19,11 @@ srun --gres=gpu:t2080ti:1 singularity exec transformers-ner.sif python3 run_ner.
 ```
 
 ```
-sbatch --gres=gpu:t8000:1 singularity.sh exec transformers-ner.sif python3 run_ner.py \                           !110
+sbatch --gres=gpu:t8000:1 singularity.sh exec transformers-ner.sif python3 run_ner_transformers.py \                           !110
   --model_name_or_path bert-base-german-cased \
-  --train_file Legal-Entity-Recognition/data/train.json \
-  --validation_file Legal-Entity-Recognition/data/validation.json \
-  --test_file Legal-Entity-Recognition/data/test.json \
+  --train_file data/train.json \
+  --validation_file data/validation.json \
+  --test_file data/test.json \
   --output_dir ler-tmp2 \
   --do_train \
   --do_eval \
