@@ -1,4 +1,37 @@
 # Legal-Entity-Recognition
+## Transformers NER
+
+### Build Singularity Image
+singularity build transformers-ner.sif transformers-ner.def
+
+
+### Run Slurm Job
+```
+srun --gres=gpu:t2080ti:1 singularity exec transformers-ner.sif python3 run_ner.py \
+  --model_name_or_path bert-base-german-cased \
+  --train_file Legal-Entity-Recognition/data/train.json \
+  --validation_file Legal-Entity-Recognition/data/validation.json \
+  --test_file Legal-Entity-Recognition/data/test.json \
+  --output_dir ler-tmp2 \
+  --do_train \
+  --do_eval \
+  --return_entity_level_metrics
+```
+
+```
+sbatch --gres=gpu:t8000:1 singularity.sh exec transformers-ner.sif python3 run_ner.py \                           !110
+  --model_name_or_path bert-base-german-cased \
+  --train_file Legal-Entity-Recognition/data/train.json \
+  --validation_file Legal-Entity-Recognition/data/validation.json \
+  --test_file Legal-Entity-Recognition/data/test.json \
+  --output_dir ler-tmp2 \
+  --do_train \
+  --do_eval \
+  --return_entity_level_metrics
+```
+
+
+
 ## Fine-grained Named Entity Recognition in Legal Documents
 
 This work has been partially funded by the project Lynx, which has received funding from the EU's Horizon 2020 research and innovation programme under grant agreement no. 780602, see [http://www.lynx-project.eu](http://lynx-project.eu/).

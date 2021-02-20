@@ -1,0 +1,6 @@
+Bootstrap: docker
+From: huggingface/transformers-pytorch-gpu
+
+%post
+    pip install seqeval
+    pip install datasets
