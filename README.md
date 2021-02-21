@@ -7,7 +7,7 @@ singularity build transformers-ner.sif transformers-ner.def
 
 ### Run Slurm Job
 ```
-srun --gres=gpu:t2080ti:1 singularity exec transformers-ner.sif python3 run_ner_transformers.py \
+srun --gres=gpu:t2080ti:1 singularity exec --nv transformers-ner.sif python3 run_ner_transformers.py \
   --model_name_or_path bert-base-german-cased \
   --train_file data/train.json \
   --validation_file data/validation.json \
@@ -19,7 +19,7 @@ srun --gres=gpu:t2080ti:1 singularity exec transformers-ner.sif python3 run_ner_
 ```
 
 ```
-sbatch --gres=gpu:t8000:1 singularity.sh exec transformers-ner.sif python3 run_ner_transformers.py \                           !110
+sbatch --gres=gpu:t8000:1 singularity.sh exec --nv transformers-ner.sif python3 run_ner_transformers.py \                           !110
   --model_name_or_path bert-base-german-cased \
   --train_file data/train.json \
   --validation_file data/validation.json \
@@ -29,7 +29,23 @@ sbatch --gres=gpu:t8000:1 singularity.sh exec transformers-ner.sif python3 run_n
   --do_eval \
   --return_entity_level_metrics
 ```
-
+```
+srun --gres=gpu:t2080ti:1 singularity exec --nv transformers-ner.sif python3 run_ner_transformers.py \
+  --model_name_or_path bert-base-german-cased \
+  --train_file data/train_small.json \
+  --validation_file data/validation_small.json \
+  --test_file data/test_small.json \
+  --return_entity_level_metrics \
+  --output_dir ler-tmp \
+  --overwrite_output_dir \
+  --do_train \
+  --do_eval \
+  --do_predict \
+  --evaluation_strategy steps \
+  --logging_steps 10 \
+  --eval_steps 500 \
+  --load_best_model_at_end
+```
 
 
 ## Fine-grained Named Entity Recognition in Legal Documents
